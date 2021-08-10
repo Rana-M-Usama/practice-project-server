@@ -1,13 +1,15 @@
 
 const dotenv = require('dotenv')
 
+dotenv.config({path: './config.env'});
+
 const express = require("express");
 
 const app = express();
 
 const cors=require('cors');
 
-const port =6000;
+const port = process.env.PORT;
 
 app.use(cors({origin: 'http://localhost:3000'}));
 
