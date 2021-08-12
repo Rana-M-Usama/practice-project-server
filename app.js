@@ -17,9 +17,6 @@ app.listen(port, () => {
   console.log(`Server is running at ${port}`)
 })
 
-
-
-
 app.use(express.json()) ; 
 
 app.use(require('./router/auth'));  

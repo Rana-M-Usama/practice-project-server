@@ -1,10 +1,29 @@
 const express = require('express')
 const router = express.Router();
 const mysql = require('../db/mysql')
-
+const bcrypt = require('bcrypt');
 
 router.post('/register', async (req, res) => {   
     console.log(req.body);
+   var Hashpassword=  await bcrypt.hash(req.body.password, 6);
+   console.log(Hashpassword);
+
+  var query=` call practiceproject.Register('${req.body.email}', '${Hashpassword}', '${req.body.name}', '${req.body.email}', '${req.body.phone}')` ;
+        mysql.query(query,(error,result)=>{
+                     
+             if(error){
+
+                console.log(error);
+
+
+             }
+             else{
+
+                console.log('success')
+             }
+
+
+        });
 
 });
 
