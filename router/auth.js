@@ -68,6 +68,7 @@ router.post('/signin', async (req, res) => {
     });
 });
 router.post('/about', async (req, res) => {
+    console.log('called');
     console.log(req.body);
 });
 
