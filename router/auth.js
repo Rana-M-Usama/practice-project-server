@@ -66,9 +66,9 @@ router.post('/signin', async (req, res) => {
 
 
     });
-
-
-
-
 });
+router.post('/about', async (req, res) => {
+    console.log(req.body);
+});
+
 module.exports = router;
