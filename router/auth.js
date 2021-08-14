@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const mysql = require('../db/mysql')
 var bcrypt = require('bcryptjs');
+const { query } = require('../db/mysql');
 require('../db/mysql');
 router.post('/register', async (req, res) => {
     console.log(req.body);
@@ -37,7 +38,7 @@ router.post('/register', async (req, res) => {
 router.post('/signin', async (req, res) => {
 
     console.log(req.body);
-    query = `select password from users where Login_id='${req.body.email}'`
+    const query = `select password from users where Login_id='${req.body.email}'`
     console.log(query);
 
 
@@ -70,6 +71,20 @@ router.post('/signin', async (req, res) => {
 router.post('/about', async (req, res) => {
     console.log('called');
     console.log(req.body);
+
+    const query = `select * from usersdetail where email='${req.body.Data}'`
+
+    console.log(query)
+    mysql.query(query, async (err, result) => {
+        console.log(result)
+        if (result.length === 0) {
+            res.status(404).send('');
+        }
+        else {
+            res.send('suceess')
+        }
+    })
+
 });
 
 module.exports = router;
