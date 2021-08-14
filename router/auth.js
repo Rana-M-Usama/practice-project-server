@@ -70,20 +70,18 @@ router.post('/signin', async (req, res) => {
 });
 router.post('/about', async (req, res) => {
     console.log('called');
-    console.log(req.body);
+   
 
     const query = `select * from usersdetail where email='${req.body.Data}'`
 
-    console.log(query)
+   
     mysql.query(query, async (err, result) => {
-        console.log(result)
-        if (result.length === 0) {
-            res.status(404).send('');
-        }
-        else {
-            res.send('suceess')
-        }
-    })
+       
+                   
+                 
+            res.send(result[0]);           
+      
+    })        
 
 });
 
