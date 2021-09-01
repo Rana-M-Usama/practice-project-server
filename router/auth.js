@@ -23,11 +23,7 @@ router.post('/register', upload.single('profile-file'), async (req, res) => {
     console.log(JSON.stringify(req.file))
     const hashpassword = await bcrypt.hash(req.body.password, 10);
     console.log(hashpassword)
-    var response = '<a href="/">Home</a><br>'
-    response += "Files uploaded successfully.<br>"
-    response += `<img src="${req.file}" /><br>`
 
-    res.send(response)
 
     const query = `call database1.Register('${req.body.email}', '${hashpassword}', '${req.body.name}','${req.body.phone}',,'${req.body.image}');`
     console.log(query);
