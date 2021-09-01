@@ -4,14 +4,31 @@ const mysql = require('../db/mysql')
 var bcrypt = require('bcryptjs');
 const { query } = require('../db/mysql');
 const multer = require('multer')
-const upload = multer({ dest: 'uploads/' })  ///which tells Multer where to upload the files
+
 
 
 require('../db/mysql');
-router.post('/register', upload.single('avatar'), async (req, res) => {
-    console.log(req.file, req.body)
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './uploads')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
+    }
+})
+var upload = multer({ storage: storage })
+
+router.post('/register', upload.single('profile-file'), async (req, res) => {
+    console.log(JSON.stringify(req.file))
     const hashpassword = await bcrypt.hash(req.body.password, 10);
     console.log(hashpassword)
+    var response = '<a href="/">Home</a><br>'
+    response += "Files uploaded successfully.<br>"
+    response += `<img src="${req.file}" /><br>`
+
+    res.send(response)
+
     const query = `call database1.Register('${req.body.email}', '${hashpassword}', '${req.body.name}','${req.body.phone}',,'${req.body.image}');`
     console.log(query);
     mysql.query(query, async (err, result) => {
