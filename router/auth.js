@@ -19,37 +19,40 @@ var storage = multer.diskStorage({
 })
 var upload = multer({ storage: storage })
 
-router.post('/register', upload.single('profile-file'), async (req, res) => {
-    console.log(JSON.stringify(req.file))
-    const hashpassword = await bcrypt.hash(req.body.password, 10);
-    console.log(hashpassword)
+router.post('/register', upload.single('file'), async (req, res) => {
+    console.log('running');
+    console.log(req.body);
+    console.log(req.file);
+    // console.log(JSON.stringify(req.file))
+    // const hashpassword = await bcrypt.hash(req.body.password, 10);
+    // console.log(hashpassword)
 
 
-    const query = `call database1.Register('${req.body.email}', '${hashpassword}', '${req.body.name}','${req.body.phone}',,'${req.body.image}');`
-    console.log(query);
-    mysql.query(query, async (err, result) => {
+    // const query = `call database1.Register('${req.body.email}', '${hashpassword}', '${req.body.name}','${req.body.phone}',,'${req.body.image}');`
+    // console.log(query);
+    // mysql.query(query, async (err, result) => {
 
-        console.log(err);
-        console.log(result);
+    //     console.log(err);
+    //     console.log(result);
 
-        if (err) {
+    //     if (err) {
 
-            if (err.errno === 1062) {
-
-
-                res.status(404).send('');
-            }
+    //         if (err.errno === 1062) {
 
 
-
-        }
-        else {
-
-            res.send('success');
-        }
+    //             res.status(404).send('');
+    //         }
 
 
-    })
+
+    //     }
+    //     else {
+
+    //         res.send('success');
+    //     }
+
+
+    // })
 });
 
 router.post('/signin', async (req, res) => {
@@ -79,11 +82,11 @@ router.post('/signin', async (req, res) => {
 
 
 
-        }
+       }
 
 
 
-    });
+     });
 });
 router.post('/about', async (req, res) => {
     console.log('called');
